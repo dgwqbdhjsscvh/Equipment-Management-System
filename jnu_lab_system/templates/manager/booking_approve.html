@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}校外人员预约审批 - 江南大学实验室设备管理系统{% endblock %}
+
+{% block sidebar %}
+<div class="sidebar">
+    <a href="{% url 'manager_home' %}">首页</a>
+    <a href="{% url 'manager_booking_approve' %}">校外人员预约审批</a>
+    <a href="{% url 'user_manage' %}">用户管理</a>
+    <a href="{% url 'device_purchase' %}">设备采购/报废</a>
+    <a href="{% url 'manager_report_stat' %}">报表统计</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>校外人员设备预约审批（管理员已初审）</h2>
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            <thead>
+                <tr>
+                    <th>选择</th>
+                    <th>预约编号</th>
+                    <th>申请人</th>
+                    <th>所在单位</th>
+                    <th>设备编号</th>
+                    <th>预约时段</th>
+                    <th>费用金额</th>
+                    <th>审批操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" name="booking_ids" value="BOOK003"></td>
+                    <td>BOOK003</td>
+                    <td>王五</td>
+                    <td>XX科技公司</td>
+                    <td>DEV002</td>
+                    <td>2025-12-30 10:00-12:00</td>
+                    <td>100元</td>
+                    <td>
+                        <button type="submit" name="approve" value="BOOK003" class="btn btn-success">最终批准</button>
+                        <button type="submit" name="reject" value="BOOK003" class="btn btn-danger">拒绝</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="booking_ids" value="BOOK004"></td>
+                    <td>BOOK004</td>
+                    <td>赵六</td>
+                    <td>XX研究院</td>
+                    <td>DEV004</td>
+                    <td>2025-12-31 14:00-16:00</td>
+                    <td>150元</td>
+                    <td>
+                        <button type="submit" name="approve" value="BOOK004" class="btn btn-success">最终批准</button>
+                        <button type="submit" name="reject" value="BOOK004" class="btn btn-danger">拒绝</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="margin-top: 20px;">
+            <button type="submit" name="batch_approve" class="btn btn-success">批量最终批准</button>
+            <button type="submit" name="batch_reject" class="btn btn-danger">批量拒绝</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

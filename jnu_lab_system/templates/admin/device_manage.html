@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}设备管理 - 江南大学实验室设备管理系统{% endblock %}
+
+{% block sidebar %}
+<div class="sidebar">
+    <a href="{% url 'admin_home' %}">首页</a>
+    <a href="{% url 'booking_approve' %}">预约审批</a>
+    <a href="{% url 'device_manage' %}">设备管理</a>
+    <a href="{% url 'report_stat' %}">报表统计</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>实验设备信息管理</h2>
+    <div style="margin-bottom: 20px;">
+        <button class="btn btn-success" onclick="location.href='#add_device'">新增设备</button>
+        <button class="btn">导出设备台账</button>
+        <input type="text" placeholder="输入设备编号/名称搜索" style="width: 300px; margin-left: 20px;">
+        <button class="btn">搜索</button>
+    </div>
+
+    <!-- 设备列表 -->
+    <table>
+        <thead>
+            <tr>
+                <th>设备编号</th>
+                <th>型号</th>
+                <th>生产厂商</th>
+                <th>购入时间</th>
+                <th>实验用途</th>
+                <th>可用状态</th>
+                <th>租用价格</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>DEV001</td>
+                <td>型号A-100</td>
+                <td>厂商A</td>
+                <td>2023-01-15</td>
+                <td>物理实验</td>
+                <td>可用</td>
+                <td>0元/2小时（校内）</td>
+                <td>
+                    <button class="btn">编辑</button>
+                    <button class="btn btn-danger">标记检修</button>
+                </td>
+            </tr>
+            <tr>
+                <td>DEV002</td>
+                <td>型号B-200</td>
+                <td>厂商B</td>
+                <td>2022-09-10</td>
+                <td>化学实验</td>
+                <td>检修中</td>
+                <td>50元/2小时（校外）</td>
+                <td>
+                    <button class="btn">编辑</button>
+                    <button class="btn btn-success">标记可用</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 新增设备表单（仅演示） -->
+    <div id="add_device" class="card" style="margin-top: 30px;">
+        <h3>新增实验设备</h3>
+        <form method="post">
+            {% csrf_token %}
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    <label>设备编号</label>
+                    <input type="text" name="device_id" placeholder="例如：DEV003" required>
+                </div>
+                <div class="form-group">
+                    <label>型号</label>
+                    <input type="text" name="model" required>
+                </div>
+                <div class="form-group">
+                    <label>生产厂商</label>
+                    <input type="text" name="manufacturer" required>
+                </div>
+                <div class="form-group">
+                    <label>购入时间</label>
+                    <input type="date" name="purchase_date" required>
+                </div>
+                <div class="form-group">
+                    <label>实验用途</label>
+                    <input type="text" name="purpose" required>
+                </div>
+                <div class="form-group">
+                    <label>可用状态</label>
+                    <select name="status" required>
+                        <option value="可用" selected>可用</option>
+                        <option value="检修中">检修中</option>
+                        <option value="报废">报废</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>校内租用价格</label>
+                    <input type="number" name="price_internal" value="0" required>
+                </div>
+                <div class="form-group">
+                    <label>校外租用价格</label>
+                    <input type="number" name="price_external" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">保存设备信息</button>
+            <button type="button" class="btn" onclick="location.href='#top'">取消</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

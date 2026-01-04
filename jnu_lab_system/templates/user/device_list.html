@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}设备查询 - 江南大学实验室设备管理系统{% endblock %}
+
+{% block sidebar %}
+<div class="sidebar">
+    <a href="{% url 'user_home' %}">首页</a>
+    <a href="{% url 'device_list' %}">设备查询</a>
+    <a href="{% url 'booking_apply' %}">预约申请</a>
+    <a href="{% url 'my_booking' %}">我的预约</a>
+    <a href="{% url 'user_profile' %}">个人信息</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>实验设备查询</h2>
+    <div class="form-group" style="margin-bottom: 20px;">
+        <input type="text" placeholder="输入设备名称/编号搜索" style="width: 500px;">
+        <button class="btn">搜索</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>设备编号</th>
+                <th>型号</th>
+                <th>生产厂商</th>
+                <th>实验用途</th>
+                <th>可用状态</th>
+                <th>租用价格</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>DEV001</td>
+                <td>型号A-100</td>
+                <td>厂商A</td>
+                <td>物理实验</td>
+                <td>可用</td>
+                <td>0元/2小时（校内）</td>
+                <td><a href="{% url 'booking_apply' %}" class="btn btn-success">预约</a></td>
+            </tr>
+            <tr>
+                <td>DEV002</td>
+                <td>型号B-200</td>
+                <td>厂商B</td>
+                <td>化学实验</td>
+                <td>不可用（检修）</td>
+                <td>50元/2小时（校外）</td>
+                <td><button class="btn" disabled>预约</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}用户管理 - 江南大学实验室设备管理系统{% endblock %}
+
+{% block sidebar %}
+<div class="sidebar">
+    <a href="{% url 'manager_home' %}">首页</a>
+    <a href="{% url 'manager_booking_approve' %}">校外人员预约审批</a>
+    <a href="{% url 'user_manage' %}">用户管理</a>
+    <a href="{% url 'device_purchase' %}">设备采购/报废</a>
+    <a href="{% url 'manager_report_stat' %}">报表统计</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>系统用户管理</h2>
+    <div style="margin-bottom: 20px;">
+        <button class="btn">校内教师</button>
+        <button class="btn">校内学生</button>
+        <button class="btn">校外人员</button>
+        <button class="btn">导出用户台账</button>
+        <input type="text" placeholder="输入姓名/编号搜索" style="width: 300px; margin-left: 20px;">
+        <button class="btn">搜索</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>用户编号/学号</th>
+                <th>姓名</th>
+                <th>用户类型</th>
+                <th>所在学院/单位</th>
+                <th>联系电话</th>
+                <th>借用资格</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>20230001</td>
+                <td>张三</td>
+                <td>校内学生</td>
+                <td>物联网工程学院</td>
+                <td>13800138000</td>
+                <td>正常</td>
+                <td>
+                    <button class="btn">查看详情</button>
+                    <button class="btn btn-danger">禁用</button>
+                </td>
+            </tr>
+            <tr>
+                <td>T001</td>
+                <td>李四</td>
+                <td>校内教师</td>
+                <td>计算机学院</td>
+                <td>13900139000</td>
+                <td>正常</td>
+                <td>
+                    <button class="btn">查看详情</button>
+                    <button class="btn btn-danger">禁用</button>
+                </td>
+            </tr>
+            <tr>
+                <td>O001</td>
+                <td>王五</td>
+                <td>校外人员</td>
+                <td>XX科技公司</td>
+                <td>13700137000</td>
+                <td>正常</td>
+                <td>
+                    <button class="btn">查看详情</button>
+                    <button class="btn btn-danger">禁用</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

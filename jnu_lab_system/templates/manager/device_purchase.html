@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}设备采购/报废 - 江南大学实验室设备管理系统{% endblock %}
+
+{% block sidebar %}
+<div class="sidebar">
+    <a href="{% url 'manager_home' %}">首页</a>
+    <a href="{% url 'manager_booking_approve' %}">校外人员预约审批</a>
+    <a href="{% url 'user_manage' %}">用户管理</a>
+    <a href="{% url 'device_purchase' %}">设备采购/报废</a>
+    <a href="{% url 'manager_report_stat' %}">报表统计</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>实验设备采购/报废管理</h2>
+    <div style="margin-bottom: 20px;">
+        <button class="btn" onclick="location.href='#purchase'">采购申请</button>
+        <button class="btn" onclick="location.href='#scrap'">报废审批</button>
+    </div>
+
+    <!-- 采购申请区域 -->
+    <div id="purchase" class="card" style="margin-bottom: 30px;">
+        <h3>设备采购申请</h3>
+        <form method="post">
+            {% csrf_token %}
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    <label>设备名称</label>
+                    <input type="text" name="device_name" required>
+                </div>
+                <div class="form-group">
+                    <label>型号规格</label>
+                    <input type="text" name="model" required>
+                </div>
+                <div class="form-group">
+                    <label>生产厂商</label>
+                    <input type="text" name="manufacturer" required>
+                </div>
+                <div class="form-group">
+                    <label>采购数量</label>
+                    <input type="number" name="count" min="1" value="1" required>
+                </div>
+                <div class="form-group">
+                    <label>预估单价（元）</label>
+                    <input type="number" name="price" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>采购用途</label>
+                    <input type="text" name="purpose" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>采购理由说明</label>
+                <textarea name="reason" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">提交采购申请</button>
+        </form>
+    </div>
+
+    <!-- 报废审批区域 -->
+    <div id="scrap">
+        <h3>设备报废审批</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>选择</th>
+                    <th>设备编号</th>
+                    <th>型号</th>
+                    <th>购入时间</th>
+                    <th>报废申请理由</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" name="scrap_ids" value="DEV005"></td>
+                    <td>DEV005</td>
+                    <td>型号D-400</td>
+                    <td>2018-05-20</td>
+                    <td>老化严重，无法维修</td>
+                    <td>
+                        <button type="submit" name="approve_scrap" value="DEV005" class="btn btn-success">批准报废</button>
+                        <button type="submit" name="reject_scrap" value="DEV005" class="btn btn-danger">拒绝报废</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

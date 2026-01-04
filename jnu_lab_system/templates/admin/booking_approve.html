@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}预约审批 - 江南大学实验室设备管理系统{% endblock %}
+
+{% block sidebar %}
+<div class="sidebar">
+    <a href="{% url 'admin_home' %}">首页</a>
+    <a href="{% url 'booking_approve' %}">预约审批</a>
+    <a href="{% url 'device_manage' %}">设备管理</a>
+    <a href="{% url 'report_stat' %}">报表统计</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>设备预约申请审批</h2>
+    <div style="margin-bottom: 20px;">
+        <button class="btn">全部待审批</button>
+        <button class="btn">校内教师申请</button>
+        <button class="btn">校内学生申请</button>
+        <button class="btn">校外人员申请</button>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            <thead>
+                <tr>
+                    <th>选择</th>
+                    <th>预约编号</th>
+                    <th>申请人</th>
+                    <th>用户类型</th>
+                    <th>设备编号</th>
+                    <th>预约时段</th>
+                    <th>设备状态</th>
+                    <th>审批操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" name="booking_ids" value="BOOK001"></td>
+                    <td>BOOK001</td>
+                    <td>李四（教师）</td>
+                    <td>校内教师</td>
+                    <td>DEV001</td>
+                    <td>2025-12-30 08:00-10:00</td>
+                    <td>可用</td>
+                    <td>
+                        <button type="submit" name="approve" value="BOOK001" class="btn btn-success">批准</button>
+                        <button type="submit" name="reject" value="BOOK001" class="btn btn-danger">拒绝</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="booking_ids" value="BOOK002"></td>
+                    <td>BOOK002</td>
+                    <td>张三（学生）</td>
+                    <td>校内学生</td>
+                    <td>DEV003</td>
+                    <td>2025-12-30 14:00-16:00</td>
+                    <td>可用</td>
+                    <td>
+                        <button type="submit" name="approve" value="BOOK002" class="btn btn-success">批准</button>
+                        <button type="submit" name="reject" value="BOOK002" class="btn btn-danger">拒绝</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="booking_ids" value="BOOK003"></td>
+                    <td>BOOK003</td>
+                    <td>王五（校外）</td>
+                    <td>校外人员</td>
+                    <td>DEV002</td>
+                    <td>2025-12-30 10:00-12:00</td>
+                    <td>可用</td>
+                    <td>
+                        <button type="submit" name="approve" value="BOOK003" class="btn btn-success">批准（待负责人审核）</button>
+                        <button type="submit" name="reject" value="BOOK003" class="btn btn-danger">拒绝</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="margin-top: 20px;">
+            <button type="submit" name="batch_approve" class="btn btn-success">批量批准</button>
+            <button type="submit" name="batch_reject" class="btn btn-danger">批量拒绝</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}设备预约申请 - 江南大学实验室设备管理系统{% endblock %}
+
+{% block sidebar %}
+<div class="sidebar">
+    <a href="{% url 'user_home' %}">首页</a>
+    <a href="{% url 'device_list' %}">设备查询</a>
+    <a href="{% url 'booking_apply' %}">预约申请</a>
+    <a href="{% url 'my_booking' %}">我的预约</a>
+    <a href="{% url 'user_profile' %}">个人信息</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>实验设备预约申请</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>设备编号</label>
+            <input type="text" name="device_id" placeholder="例如：DEV001" required>
+        </div>
+        <div class="form-group">
+            <label>设备名称</label>
+            <input type="text" name="device_name" placeholder="例如：型号A-100 物理实验设备" required>
+        </div>
+        <div class="form-group">
+            <label>预约日期</label>
+            <input type="date" name="booking_date" required>
+        </div>
+        <div class="form-group">
+            <label>预约时段（每2小时为1单位）</label>
+            <select name="time_slot" required>
+                <option value="">请选择时段</option>
+                <option value="00:00-02:00">00:00 - 02:00</option>
+                <option value="02:00-04:00">02:00 - 04:00</option>
+                <option value="04:00-06:00">04:00 - 06:00</option>
+                <option value="06:00-08:00">06:00 - 08:00</option>
+                <option value="08:00-10:00">08:00 - 10:00</option>
+                <option value="10:00-12:00">10:00 - 12:00</option>
+                <option value="12:00-14:00">12:00 - 14:00</option>
+                <option value="14:00-16:00">14:00 - 16:00</option>
+                <option value="16:00-18:00">16:00 - 18:00</option>
+                <option value="18:00-20:00">18:00 - 20:00</option>
+                <option value="20:00-22:00">20:00 - 22:00</option>
+                <option value="22:00-24:00">22:00 - 24:00</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>借用用途</label>
+            <textarea name="purpose" rows="3" placeholder="请简要说明设备使用用途" required></textarea>
+        </div>
+        <div class="form-group" id="student_teacher" style="display: none;">
+            <label>指导教师编号</label>
+            <input type="text" name="teacher_id" placeholder="学生用户必填">
+        </div>
+        <button type="submit" class="btn btn-success">提交预约申请</button>
+        <button type="button" class="btn" onclick="history.back()">返回</button>
+    </form>
+    <script>
+        // 模拟学生用户显示指导教师输入框（仅前端演示）
+        const userType = "student"; // 可改为 teacher/outside 测试不同状态
+        if (userType === "student") {
+            document.getElementById("student_teacher").style.display = "block";
+        }
+    </script>
+</div>
+{% endblock %}
