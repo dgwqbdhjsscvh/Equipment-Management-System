@@ -166,8 +166,6 @@ def manager_report_stat(request):
     
     from labadmin.models import Report
     from labadmin.views import generate_report_data
-    from django.contrib import messages
-    from django.shortcuts import redirect
     from datetime import datetime, timedelta, date
     from decimal import Decimal
 
@@ -304,7 +302,6 @@ def manager_report_stat(request):
 def manager_delete_report(request, report_id):
     """删除报表"""
     from labadmin.models import Report
-    from django.contrib import messages
     
     try:
         report = Report.objects.get(id=report_id)
@@ -677,6 +674,7 @@ def user_edit(request, pk):
                 user_info.auth_user.save()
             
             user_info.save()
+            messages.success(request, f'用户【{user_info.name}】信息已更新！')
             # 保留查询参数，避免跳转错误
             from django.http import HttpResponseRedirect
             from django.urls import reverse
@@ -685,6 +683,9 @@ def user_edit(request, pk):
             if query_params:
                 redirect_url += '?' + query_params.urlencode()
             return HttpResponseRedirect(redirect_url)
+        else:
+            # 表单验证失败
+            messages.error(request, '表单填写有误，请检查后重新提交！')
     else:
         form = UserInfoForm(instance=user_info)
     
